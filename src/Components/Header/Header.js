@@ -14,10 +14,14 @@ const Header = () => {
           alt="logo" className="logo"  />
         <h1  className='title'>Indian Railway Summer Training Portal </h1>
       </div>
-      <Navbar />
+       <div className="navbar-container">
+        <Navbar /> {/* Navbar component */}
+      </div>
+      
       <button onClick={toggleTheme} className="theme-toggle-button"> {/* New class */}
         {theme === 'light' ? <FaMoon /> : <FaSun />}  {/* Display icons based on theme */}
       </button>
+     
     </div>
   );
 };

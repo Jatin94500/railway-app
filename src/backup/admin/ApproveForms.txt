@@ -42,8 +42,9 @@ const ApproveForms = () => {
     );
   };
 
-  return (<div className='fixed-sidebar'>
-    <Sidebar/>
+  return (<div >
+     <Sidebar/>
+  
     <div className="admin-content">
       <h2>Approve Submitted Forms</h2>
       <table className="admin-table">
@@ -75,8 +76,13 @@ const ApproveForms = () => {
           ))}
         </tbody>
       </table>
+       <div>
+     
+      
     </div>
     </div>
+    </div>
+    
   );
 };
 

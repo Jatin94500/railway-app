@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import StudentProfileModal from './StudentProfileModal';
+import Sidebar from './Sidebar';
 import '../../App.css';
 
 // Dummy data for students. Replace this with data from your API.
@@ -53,8 +54,10 @@ const ApproveForm = () => {
         setStudents(students.map(s => s.id === id ? { ...s, status: 'Rejected' } : s));
     };
 
-    return (
-        <div className="admin-content">
+    return ( 
+         <div className="admin-layout">
+              <Sidebar />
+        <div className="admin-main">
             <h2>Approve Student Registrations</h2>
             <table className="admin-table">
                 <thead>
@@ -96,6 +99,7 @@ const ApproveForm = () => {
             </table>
 
             {isModalOpen && <StudentProfileModal student={selectedStudent} onClose={handleCloseModal} />}
+        </div>
         </div>
     );
 };

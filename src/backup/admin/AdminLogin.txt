@@ -8,7 +8,7 @@ const AdminLogin = ({ onLogin }) => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (email === 'admin@example.com' && password === 'admin123') {
-      onLogin(); // You can replace this with Firebase auth later
+      onLogin(); 
     } else {
       alert('Invalid credentials');
     }

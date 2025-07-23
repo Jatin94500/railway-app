@@ -14,9 +14,7 @@ import DomainBatchManagement from './DomainBatchManagement'; // Import DomainBat
 
 function App() {
   return (
-    <div>
-      <Sidebar/>
-      <div>
+    <div className="admin-container">
     <Routes>
       <Route path="/admin/dashboard" element={<DashboardHome />} />
       <Route path="/admin/forms" element={<ApproveForms />} />
@@ -31,8 +29,12 @@ function App() {
 
 
     </Routes>
+     <div>
+      <Sidebar/>
+      
     </div>
     </div>
+    
   );
 }
 // src/admin/admin.js

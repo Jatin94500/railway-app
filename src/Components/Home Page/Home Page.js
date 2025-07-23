@@ -26,6 +26,22 @@ const settings = {
   pauseOnHover: true,
   nextArrow: <NextArrow />,   // ✅ Pass custom arrow
   prevArrow: <PrevArrow />,   // ✅ Pass custom arrow
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
 };
   // Custom next arrow component
   function NextArrow(props) {
@@ -65,9 +81,8 @@ const settings = {
       <Banner />
       <BulletinTicker/>
       <NoticeBoard />
-      
-      <QuickLinks/>
       <FeaturedProjects />
+      <QuickLinks/>
       <DirectorInfo />
       <div>
         <h2 className="image-slider-title">Our Gallery</h2>

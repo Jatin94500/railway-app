@@ -15,7 +15,7 @@ import {
 
 const links = [
   { icon: <FaCalendarAlt />, text: 'Training Schedule', url: '/schedule' },
-  { icon: <FaUserCheck />, text: 'Apply for Training', url: '/apply' },
+  { icon: <FaUserCheck />, text: 'Apply for Training', url: '/login' },
   { icon: <FaBook />, text: 'Training Guidelines', url: '/guidelines' },
   { icon: <FaClipboardList />, text: 'Study Materials', url: '/materials' },
   { icon: <FaUpload />, text: 'Assignment Submission', url: '/submit-assignment' },

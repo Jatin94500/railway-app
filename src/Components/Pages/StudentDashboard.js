@@ -5,21 +5,21 @@ import React from 'react';
 function StudentDashboard() {
   // Sample data (replace with actual data fetching)
   const studentData = {
-    name: "John Doe",
+    name: "Smriti Pandey",
     photo: "student-photo.jpg", // Replace with actual image path
     enrollmentId: "STU12345",
-    college: "Example University",
+    college: "University of Lucknow",
     branch: "Computer Science",
     semester: 6,
-    email: "john.doe@example.com",
-    phone: "123-456-7890",
+    email: "smritipandey.doe@example.com",
+    phone: "1234567890",
     course: "Web Development",
     batch: {
       start: "2023-09-01",
       duration: "3 months",
     },
     mode: "Online",
-    mentor: "Jane Smith",
+    mentor: "Birju parshad",
     status: "Completed",
     certificateStatus: "Available",
     attendance: {
@@ -173,7 +173,7 @@ function StudentDashboard() {
       {/* 11. Important Downloads */}
       <div className="dashboard-section downloads">
         <h2 className="section-title">Downloads</h2>
-        <ul>
+        <ul className='download-list'>
           <li><a href="#">Admit Card (if applicable)</a></li>
           <li><a href="#">Guidelines</a></li>
           <li><a href="#">Report Format</a></li>

@@ -71,8 +71,11 @@ const StudentProfiles = () => {
   return (
     <div className="fixed-sidebar">
       <Sidebar />
+     
+    
       <div className="admin-content">
-        <h2>Student Profiles</h2>
+         
+        <h2 >Student Profiles</h2>
 
         <div className="filter-section">
           <input

@@ -27,7 +27,7 @@ export const branches = [ // Export the branches data
                         title: 'Sentiment Analysis Model',
                         description: 'Develop and train a deep learning model to analyze and classify sentiment from text data using Python and TensorFlow.',
                         technologies: ['Python', 'TensorFlow', 'NLTK', 'Scikit-learn'],
-                        imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80'
+                        imageUrl: 'https://plus.unsplash.com/premium_photo-1682144944581-7ed4b3e8ea93?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                     }
                 ]
             }
@@ -65,7 +65,7 @@ export const branches = [ // Export the branches data
                         title: 'IoT-Based Home Automation',
                         description: 'Create a smart home system to control lights and appliances remotely via a web dashboard using Raspberry Pi and sensors.',
                         technologies: ['Raspberry Pi', 'Python', 'MQTT', 'Sensors'],
-                        imageUrl: 'https://images.unsplash.com/photo-1585224432218-AC51b08da523?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80'
+                        imageUrl: 'https://images.unsplash.com/photo-1596658591534-591d75e2f2f7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                     }
                 ]
             }

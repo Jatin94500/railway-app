@@ -44,8 +44,11 @@ const DocumentVerification = () => {
     );
   };
 
-  return (<div className='fixed-sidebar'>
-    <Sidebar/>
+  return (<div>
+      <div>
+        <Sidebar />
+
+      </div>
     <div className="admin-content">
       <h2>Document Verification</h2>
       <div className="document-grid">
@@ -65,8 +68,10 @@ const DocumentVerification = () => {
           </div>
         ))}
       </div>
+    
     </div>
     </div>
+
   );
 };
 

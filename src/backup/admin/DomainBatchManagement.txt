@@ -69,9 +69,12 @@ const DomainBatchManagement = () => {
   };
 
   return (
-    <div className="fixed-sidebar">
-      <Sidebar />
+  
       <div className="admin-content">
+         <div>
+      <Sidebar/>
+      
+    </div>
         <h2>Domain-wise Batch Management</h2>
 
         <div className="filter-bar">
@@ -126,7 +129,7 @@ const DomainBatchManagement = () => {
           </div>
         ))}
       </div>
-    </div>
+   
   );
 };
 
