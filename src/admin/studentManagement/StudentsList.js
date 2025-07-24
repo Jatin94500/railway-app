@@ -1,20 +1,10 @@
 // src/admin/studentManagement/StudentsList.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { exportToPDF } from '../meritlist/utils/exportToPDF';
-import { exportToExcel } from '../meritlist/utils/exportToExcel';
 
 function StudentsList() {
   // Mock data for students
-   const handleExportToPDF = () => {
-    exportToPDF(filteredStudents, 'Student Management List');
-  };
-
-  const handleExportToExcel = () => {
-    exportToExcel(filteredStudents, 'Student Management List');
-  };
   const [students, setStudents] = useState([
-
     {
       id: 1,
       name: 'Smriti Pandey',
@@ -68,6 +58,17 @@ function StudentsList() {
     return statusMatch && searchMatch;
   });
 
+  // Simple export functions that don't rely on external libraries
+  const handleExportToPDF = () => {
+    alert("PDF export functionality will be implemented with proper libraries");
+    // In a real implementation, you would use jsPDF here
+  };
+
+  const handleExportToExcel = () => {
+    alert("Excel export functionality will be implemented with proper libraries");
+    // In a real implementation, you would use xlsx here
+  };
+
   return (
     <div className="students-list-container">
       <h1>Student Management</h1>
@@ -91,7 +92,8 @@ function StudentsList() {
           </select>
         </div>
       </div>
-       {/* Add export buttons */}
+      
+      {/* Add export buttons */}
       <div className="export-buttons">
         <button className="export-btn pdf-btn" onClick={handleExportToPDF}>
           Export to PDF

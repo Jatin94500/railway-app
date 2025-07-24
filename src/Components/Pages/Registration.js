@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Registration() {
   const [formData, setFormData] = useState({
@@ -31,6 +31,64 @@ function Registration() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [availableDomains, setAvailableDomains] = useState([]);
+  const [availableDurations, setAvailableDurations] = useState([]);
+  const [dataLoading, setDataLoading] = useState(true);
+
+  // Fetch available domains and durations from admin settings
+  useEffect(() => {
+    const fetchAvailableOptions = async () => {
+      setDataLoading(true);
+      try {
+        // In a real app, you'd fetch this data from your backend
+        const response = await fetch('/api/admin/available-options');
+        const data = await response.json();
+        
+        if (response.ok) {
+          setAvailableDomains(data.domains || []);
+          setAvailableDurations(data.durations || []);
+        } else {
+          console.error('Failed to fetch available options');
+          // Fallback data in case API fails
+          setAvailableDomains([
+            { id: 'web-development', name: 'Web Development', capacity: 20, enrolled: 15 },
+            { id: 'mobile-development', name: 'Mobile Development', capacity: 15, enrolled: 15 }, // Full
+            { id: 'data-science', name: 'Data Science', capacity: 25, enrolled: 20 },
+            { id: 'cloud-computing', name: 'Cloud Computing', capacity: 10, enrolled: 5 },
+            { id: 'cybersecurity', name: 'Cybersecurity', capacity: 15, enrolled: 10 }
+          ]);
+          
+          setAvailableDurations([
+            { id: '4', name: '4 Weeks', capacity: 30, enrolled: 25 },
+            { id: '8', name: '8 Weeks', capacity: 25, enrolled: 25 }, // Full
+            { id: '12', name: '12 Weeks', capacity: 20, enrolled: 15 },
+            { id: '16', name: '16 Weeks', capacity: 15, enrolled: 10 }
+          ]);
+        }
+      } catch (err) {
+        console.error('Error fetching available options:', err);
+        // Same fallback data
+        setAvailableDomains([
+          { id: 'web-development', name: 'Web Development', capacity: 20, enrolled: 15 },
+          { id: 'mobile-development', name: 'Mobile Development', capacity: 15, enrolled: 15 }, // Full
+          { id: 'data-science', name: 'Data Science', capacity: 25, enrolled: 20 },
+          { id: 'cloud-computing', name: 'Cloud Computing', capacity: 10, enrolled: 5 },
+          { id: 'cybersecurity', name: 'Cybersecurity', capacity: 15, enrolled: 10 }
+        ]);
+        
+        setAvailableDurations([
+          { id: '4', name: '4 Weeks', capacity: 30, enrolled: 25 },
+          { id: '8', name: '8 Weeks', capacity: 25, enrolled: 25 }, // Full
+          { id: '12', name: '12 Weeks', capacity: 20, enrolled: 15 },
+          { id: '16', name: '16 Weeks', capacity: 15, enrolled: 10 }
+        ]);
+      } finally {
+        setDataLoading(false);
+      }
+    };
+
+    fetchAvailableOptions();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -53,7 +111,7 @@ function Registration() {
     setError('');
 
     // Basic client-side validation (add more as needed)
-    if (!formData.name || !formData.email || !formData.password) { // etc
+    if (!formData.name || !formData.email || !formData.preferredDomain || !formData.trainingDuration) {
       setError('Please fill in all required fields.');
       return;
     }
@@ -85,6 +143,16 @@ function Registration() {
       setError('An error occurred during registration. Please try again later.');
       console.error(err);
     }
+  };
+
+  // Helper function to check if a domain or duration has available capacity
+  const hasAvailableCapacity = (item) => {
+    return item.capacity > item.enrolled;
+  };
+
+  // Helper function to get remaining capacity
+  const getRemainingCapacity = (item) => {
+    return item.capacity - item.enrolled;
   };
 
   return (
@@ -162,19 +230,77 @@ function Registration() {
           <h3>Training Preferences</h3>
           <div className="form-group">
             <label htmlFor="preferredDomain" className="input-label">Preferred Training Domain</label>
-            <input type="text" id="preferredDomain" name="preferredDomain" value={formData.preferredDomain} onChange={handleChange} required className="form-input" />
+            {dataLoading ? (
+              <p>Loading available domains...</p>
+            ) : (
+              <select 
+                id="preferredDomain" 
+                name="preferredDomain" 
+                value={formData.preferredDomain} 
+                onChange={handleChange} 
+                required 
+                className="form-input"
+              >
+                <option value="">Select Domain</option>
+                {availableDomains
+                  .filter(domain => hasAvailableCapacity(domain))
+                  .map(domain => (
+                    <option key={domain.id} value={domain.id}>
+                      {domain.name}
+                    </option>
+                  ))
+                }
+              </select>
+            )}
+            {!dataLoading && availableDomains.filter(domain => hasAvailableCapacity(domain)).length === 0 && (
+              <p className="no-availability">No domains currently available. Please check back later.</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="trainingDuration" className="input-label">Training Duration</label>
-            <input type="text" id="trainingDuration" name="trainingDuration" value={formData.trainingDuration} onChange={handleChange} required className="form-input" />
+            {dataLoading ? (
+              <p>Loading available durations...</p>
+            ) : (
+              <select 
+                id="trainingDuration" 
+                name="trainingDuration" 
+                value={formData.trainingDuration} 
+                onChange={handleChange} 
+                required 
+                className="form-input"
+              >
+                <option value="">Select Duration</option>
+                {availableDurations
+                  .filter(duration => hasAvailableCapacity(duration))
+                  .map(duration => (
+                    <option key={duration.id} value={duration.id}>
+                      {duration.name} (Seats Available: {getRemainingCapacity(duration)})
+                    </option>
+                  ))
+                }
+              </select>
+            )}
+            {!dataLoading && availableDurations.filter(duration => hasAvailableCapacity(duration)).length === 0 && (
+              <p className="no-availability">No training durations currently available. Please check back later.</p>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="batchTiming" className="input-label">Preferred Batch Timing</label>
-            <input type="text" id="batchTiming" name="batchTiming" value={formData.batchTiming} onChange={handleChange} required className="form-input" />
+            <select id="batchTiming" name="batchTiming" value={formData.batchTiming} onChange={handleChange} required className="form-input">
+              <option value="">Select Timing</option>
+              <option value="morning">Morning (9 AM - 12 PM)</option>
+              <option value="afternoon">Afternoon (1 PM - 4 PM)</option>
+              <option value="evening">Evening (5 PM - 8 PM)</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="modeOfTraining" className="input-label">Mode of Training</label>
-            <input type="text" id="modeOfTraining" name="modeOfTraining" value={formData.modeOfTraining} onChange={handleChange} required className="form-input" />
+            <select id="modeOfTraining" name="modeOfTraining" value={formData.modeOfTraining} onChange={handleChange} required className="form-input">
+              <option value="">Select Mode</option>
+              <option value="online">Online</option>
+              <option value="offline">Offline (In-person)</option>
+              <option value="hybrid">Hybrid (Mix of Online and Offline)</option>
+            </select>
           </div>
 
           <h3>Address Details</h3>
@@ -199,12 +325,19 @@ function Registration() {
             <input type="text" id="pinCode" name="pinCode" value={formData.pinCode} onChange={handleChange} required className="form-input" />
           </div>
 
-          <h3>ID Proof</h3>
-          {/* File upload fields (uncomment and implement separately) */}
-          {/* <div className="form-group">
-            <label htmlFor="idProof" className="input-label">Upload College ID Card / Any Government ID</label>
-            <input type="file" id="idProof" name="idProof" onChange={handleFileChange} required className="form-input" />
-          </div> */}
+          <h3>Document Uploads</h3>
+          <div className="form-group">
+            <label htmlFor="lorFile" className="input-label">Letter of Reference (LOR)</label>
+            <input type="file" id="lorFile" name="lorFile" onChange={(e) => setFormData({...formData, lorFile: e.target.files[0]})} required className="form-input" accept=".pdf,.doc,.docx" />
+            <small className="file-hint">Upload your Letter of Reference (PDF, DOC, DOCX)</small>
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="idProof" className="input-label">College ID Card / Exam Admit Card</label>
+            <input type="file" id="idProof" name="idProof" onChange={(e) => setFormData({...formData, idProof: e.target.files[0]})} required className="form-input" accept=".pdf,.jpg,.jpeg,.png" />
+            <small className="file-hint">Upload your College ID or Exam Admit Card (PDF, JPG, PNG)</small>
+          </div>
+          
           <div className="form-group">
             <label htmlFor="idNumber" className="input-label">ID Number</label>
             <input type="text" id="idNumber" name="idNumber" value={formData.idNumber} onChange={handleChange} required className="form-input" />

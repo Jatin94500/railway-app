@@ -1,119 +1,148 @@
-// src/admin/meritlist/MeritList.js
-import React, { useState } from 'react';
-import StudentRow from './StudentRow';
+import React, { useState, useEffect } from 'react';
 import StudentModal from './StudentModal';
-import { generateTrainingID } from './utils/generateTrainingID';
-import { exportToPDF } from './utils/exportToPDF';
-import { exportToExcel } from './utils/exportToExcel';
 
 function MeritList() {
-  // Mock data for applicants
-  const [students, setStudents] = useState([
-    {
-      id: 1,
-      name: 'Smriti Pandey',
-      email: 'smriti@example.com',
-      college: 'University of Lucknow',
-      branch: 'Computer Science',
-      domain: 'Web Development',
-      status: 'pending',
-      trainingId: null
-    },
-    {
-      id: 2,
-      name: 'Rahul Kumar',
-      email: 'rahul@example.com',
-      college: 'Delhi University',
-      branch: 'Information Technology',
-      domain: 'Data Science',
-      status: 'pending',
-      trainingId: null
-    },
-    {
-      id: 3,
-      name: 'Priya Singh',
-      email: 'priya@example.com',
-      college: 'Mumbai University',
-      branch: 'Electronics',
-      domain: 'Mobile App Development',
-      status: 'pending',
-      trainingId: null
-    }
-  ]);
-   const handleExportToPDF = () => {
-    exportToPDF(filteredStudents, 'Student Selection List');
-  };
-
-  const handleExportToExcel = () => {
-    exportToExcel(filteredStudents, 'Student Selection List');
-  };
-
-  const [selectedStudent, setSelectedStudent] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filter, setFilter] = useState('all');
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [domainFilter, setDomainFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-  const handleSelect = (id) => {
-    setStudents(students.map(student => {
-      if (student.id === id) {
-        return {
-          ...student,
-          status: 'selected',
-          trainingId: generateTrainingID(student.id)
-        };
-      }
-      return student;
-    }));
+  useEffect(() => {
+    // In a real app, fetch data from API
+    fetchStudents();
+  }, []);
+
+  const fetchStudents = async () => {
+    setLoading(true);
+    try {
+      // Mock data - in a real app, this would be an API call
+      const mockStudents = [
+        {
+          id: 1,
+          name: "Smriti Pandey",
+          email: "smriti@example.com",
+          college: "University of Lucknow",
+          branch: "Computer Science",
+          domain: "Web Development",
+          academicPerformance: "8.5 CGPA",
+          status: "selected",
+          documents: {
+            lor: "lor_smriti.pdf",
+            idCard: "id_smriti.jpg"
+          }
+        },
+        {
+          id: 2,
+          name: "Rahul Kumar",
+          email: "rahul@example.com",
+          college: "Delhi University",
+          branch: "Information Technology",
+          domain: "Data Science",
+          academicPerformance: "9.0 CGPA",
+          status: "pending",
+          documents: {
+            lor: "lor_rahul.pdf",
+            idCard: "id_rahul.jpg"
+          }
+        },
+        {
+          id: 3,
+          name: "Priya Singh",
+          email: "priya@example.com",
+          college: "IIT Bombay",
+          branch: "Electronics",
+          domain: "Mobile Development",
+          academicPerformance: "8.7 CGPA",
+          status: "rejected",
+          documents: {
+            lor: "lor_priya.pdf",
+            idCard: "id_priya.jpg"
+          }
+        }
+      ];
+      
+      setStudents(mockStudents);
+    } catch (error) {
+      console.error("Error fetching students:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleReject = (id) => {
-    setStudents(students.map(student => {
-      if (student.id === id) {
-        return {
-          ...student,
-          status: 'rejected',
-          trainingId: null
-        };
-      }
-      return student;
-    }));
-  };
-
-  const openStudentModal = (student) => {
+  const handleViewStudent = (student) => {
     setSelectedStudent(student);
-    setIsModalOpen(true);
+    setShowModal(true);
   };
 
-  const closeStudentModal = () => {
-    setSelectedStudent(null);
-    setIsModalOpen(false);
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
-  // Filter students based on status and search term
+  const handleSelectStudent = (studentId) => {
+    setStudents(students.map(student => 
+      student.id === studentId ? {...student, status: 'selected'} : student
+    ));
+    setShowModal(false);
+  };
+
+  const handleRejectStudent = (studentId) => {
+    setStudents(students.map(student => 
+      student.id === studentId ? {...student, status: 'rejected'} : student
+    ));
+    setShowModal(false);
+  };
+
   const filteredStudents = students.filter(student => {
-    const matchesFilter = filter === 'all' || student.status === filter;
     const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          student.email.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesFilter && matchesSearch;
+    const matchesDomain = domainFilter === 'all' || student.domain === domainFilter;
+    const matchesStatus = statusFilter === 'all' || student.status === statusFilter;
+    
+    return matchesSearch && matchesDomain && matchesStatus;
   });
 
   return (
     <div className="merit-list-container">
-      <h1>Student Selection</h1>
+      <h1>Student Merit List</h1>
+      
+      <div className="export-buttons">
+        <button className="export-btn pdf-btn">Export to PDF</button>
+        <button className="export-btn excel-btn">Export to Excel</button>
+      </div>
       
       <div className="filters-container">
         <div className="search-container">
-          <input 
-            type="text" 
-            placeholder="Search by name or email" 
+          <input
+            type="text"
+            placeholder="Search by name or email"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         
         <div className="filter-container">
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="all">All Applications</option>
+          <select 
+            value={domainFilter} 
+            onChange={(e) => setDomainFilter(e.target.value)}
+          >
+            <option value="all">All Domains</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Mobile Development">Mobile Development</option>
+            <option value="Data Science">Data Science</option>
+            <option value="Cloud Computing">Cloud Computing</option>
+            <option value="Cybersecurity">Cybersecurity</option>
+          </select>
+        </div>
+        
+        <div className="filter-container">
+          <select 
+            value={statusFilter} 
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value="all">All Status</option>
             <option value="pending">Pending</option>
             <option value="selected">Selected</option>
             <option value="rejected">Rejected</option>
@@ -121,49 +150,75 @@ function MeritList() {
         </div>
       </div>
       
-       <div className="export-buttons">
-        <button className="export-btn pdf-btn" onClick={handleExportToPDF}>
-          Export to PDF
-        </button>
-        <button className="export-btn excel-btn" onClick={handleExportToExcel}>
-          Export to Excel
-        </button>
-      </div>
-      
       <div className="table-container">
-        <table className="students-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>College</th>
-              <th>Branch</th>
-              <th>Domain</th>
-              <th>Status</th>
-              <th>Training ID</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredStudents.map(student => (
-              <StudentRow 
-                key={student.id}
-                student={student}
-                onSelect={() => handleSelect(student.id)}
-                onReject={() => handleReject(student.id)}
-                onView={() => openStudentModal(student)}
-              />
-            ))}
-          </tbody>
-        </table>
+        {loading ? (
+          <p>Loading students...</p>
+        ) : filteredStudents.length > 0 ? (
+          <table className="students-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>College</th>
+                <th>Domain</th>
+                <th>Academic Performance</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredStudents.map((student) => (
+                <tr key={student.id}>
+                  <td>{student.name}</td>
+                  <td>{student.college}</td>
+                  <td>{student.domain}</td>
+                  <td>{student.academicPerformance}</td>
+                  <td>
+                    <span className={`status-badge ${student.status}`}>
+                      {student.status.charAt(0).toUpperCase() + student.status.slice(1)}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="action-buttons">
+                      <button 
+                        className="view-btn"
+                        onClick={() => handleViewStudent(student)}
+                      >
+                        View
+                      </button>
+                      
+                      {student.status === 'pending' && (
+                        <>
+                          <button 
+                            className="select-btn"
+                            onClick={() => handleSelectStudent(student.id)}
+                          >
+                            Select
+                          </button>
+                          <button 
+                            className="reject-btn"
+                            onClick={() => handleRejectStudent(student.id)}
+                          >
+                            Reject
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No students found matching your criteria.</p>
+        )}
       </div>
       
-      {isModalOpen && selectedStudent && (
+      {showModal && selectedStudent && (
         <StudentModal 
           student={selectedStudent}
-          onClose={closeStudentModal}
-          onSelect={() => handleSelect(selectedStudent.id)}
-          onReject={() => handleReject(selectedStudent.id)}
+          onClose={handleCloseModal}
+          onSelect={() => handleSelectStudent(selectedStudent.id)}
+          onReject={() => handleRejectStudent(selectedStudent.id)}
         />
       )}
     </div>

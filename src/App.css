@@ -3852,7 +3852,7 @@ tr:hover {
 
 .view-btn {
   background-color: #e0f2fe;
-  color: #0369a1;
+  color:  #ffffff !important;
   border: 1px solid #bae6fd;
 }
 
@@ -3870,7 +3870,7 @@ tr:hover {
 
 .stamp-btn {
   background-color: #ede9fe;
-  color: #5b21b6;
+  color:  #ffffff !important;
   border: 1px solid #ddd6fe;
 }
 
@@ -4105,7 +4105,6 @@ button[type="submit"]:hover {
     display: none;
   }
 }
-
 /* ------------------------------------------------css admin-------------------------- */
 /* src/admin/login/AdminLogin.css */
 .admin-login-container {
@@ -4374,7 +4373,7 @@ button[type="submit"]:hover {
 
 .view-btn {
   background-color: #e0f2fe;
-  color: #0369a1;
+  color:  #e0f2fe !important;
   border: 1px solid #bae6fd;
 }
 
@@ -4605,13 +4604,13 @@ button[type="submit"]:hover {
 
 .view-btn {
   background-color: #e0f2fe;
-  color: #0369a1;
+  color: #ffffff;
   border: 1px solid #bae6fd;
 }
 
 .edit-btn {
   background-color: #f3e8ff;
-  color: #7e22ce;
+  color:  #ffffff  !important;
   border: 1px solid #e9d5ff;
 }
 
@@ -4627,9 +4626,7 @@ button[type="submit"]:hover {
   }
 }
 
-
-
-/* Add to src/admin/meritlist/MeritList.css or src/admin/styles/AdminDashboard.css */
+/* Export buttons styles */
 .export-buttons {
   display: flex;
   gap: 10px;
@@ -4667,8 +4664,418 @@ button[type="submit"]:hover {
   background-color: #bbf7d0;
 }
 
+/* Mobile responsive styles */
 @media (max-width: 768px) {
   .export-buttons {
     flex-direction: column;
+  }
+  
+  .admin-login-container {
+    padding: 15px;
+  }
+  
+  .login-card {
+    padding: 20px;
+  }
+  
+  .student-modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  .modal-body {
+    padding: 15px;
+  }
+  
+  .documents-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .students-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .students-table th,
+  .students-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  
+  .action-buttons button {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+}
+
+/* Login and Registration Form Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .login-page,
+  .registration-page {
+    padding: 10px;
+  }
+
+  .login-container,
+  .registration-container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .login-form,
+  .registration-form {
+    width: 100%;
+  }
+
+  .form-input,
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .login-button,
+  .registration-button {
+    width: 100%;
+    padding: 12px;
+  }
+  
+  .file-hint {
+    font-size: 12px;
+  }
+
+  .form-group input[type="file"] {
+    width: 100%;
+    padding: 8px 0;
+  }
+  
+  .no-availability {
+    font-size: 12px;
+    margin-top: 5px;
+    color: #b91c1c;
+  }
+  
+  .registration-form h3 {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+}
+/* Fix for certificate and challenge tables on mobile */
+@media (max-width: 768px) {
+  .documents-table,
+  .certificates-table,
+  .challenges-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .documents-table th,
+  .documents-table td,
+  .certificates-table th,
+  .certificates-table td,
+  .challenges-table th,
+  .challenges-table td {
+    white-space: nowrap;
+    min-width: 100px;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    margin: 0 -15px;
+    padding: 0 15px;
+    width: calc(100% + 30px);
+  }
+}
+
+/* Challan System Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .challan-container {
+    padding: 15px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .challan-card {
+    width: 100%;
+    overflow-x: auto;
+    padding: 15px;
+  }
+  
+  .challan-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .challan-body {
+    width: 100%;
+    min-width: 280px;
+  }
+  
+  .challan-student-details,
+  .challan-fee-details {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .challan-signature {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .signature-box {
+    width: 100%;
+  }
+  
+  .challan-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .challan-actions button {
+    width: 100%;
+  }
+  
+  .challan-instructions ol {
+    padding-left: 20px;
+  }
+}
+/* Application Status Section Styles */
+.application-status {
+  position: relative;
+}
+
+.challan-section {
+  background-color: #f0f7ff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  border-left: 4px solid #0369a1;
+}
+
+.challan-section p {
+  margin-bottom: 10px;
+}
+
+.generate-challan-btn {
+  background-color: #0369a1;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.generate-challan-btn:hover {
+  background-color: #0284c7;
+}
+
+.payment-status {
+  background-color: #f0f9ff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  border-left: 4px solid #0ea5e9;
+}
+
+.select-batch-btn {
+  background-color: #0ea5e9;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.select-batch-btn:hover {
+  background-color: #0284c7;
+}
+
+/* Batch Selection Modal Styles */
+.batch-selection-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: #1f3b57;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+
+.batch-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin: 15px 0;
+}
+
+.batch-option {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.batch-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.batch-option h4 {
+  margin-top: 0;
+  color: #1f3b57;
+  font-size: 16px;
+}
+
+.batch-option p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.batch-option button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 10px;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.batch-option button:hover {
+  background-color: #059669;
+}
+
+.batch-option button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.modal-content > button {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.modal-content > button:hover {
+  background-color: #e2e8f0;
+}
+
+/* Status Indicator Styles */
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-indicator.selected {
+  background-color: #0ea5e9;
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+}
+
+.status-indicator.pending {
+  background-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.status-indicator.completed {
+  background-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.status-indicator.rejected {
+  background-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+/* Certificate Section Styles */
+.certificate-section {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.certificate-section .section-title {
+  color: white;
+}
+
+.certificate-section button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.certificate-section button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .batch-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+  
+  .challan-section,
+  .payment-status {
+    padding: 12px;
+  }
+  
+  .generate-challan-btn,
+  .select-batch-btn {
+    width: 100%;
   }
 }

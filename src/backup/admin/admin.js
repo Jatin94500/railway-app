@@ -24,7 +24,7 @@ function App() {
       <Route path="/AdminLogin" element={<h1><AdminLogin/></h1>} /> {/* Placeholder for Admin Login */}
       <Route path="/admin/documents" element={<DocumentVerification />} />
       <Route path='/admin/DocumentVerification' element={<DocumentVerification />} />
-      <Route path='/admin/meritlist' element={<MeritList />} /> {/* Placeholder for Merit List */}
+      <Route path='/admin/merit-list' element={<MeritList />} /> {/* Placeholder for Merit List */}
       <Route path="/admin/domain-batch" element={<DomainBatchManagement />} />
 
 
